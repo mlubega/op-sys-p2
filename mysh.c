@@ -18,18 +18,16 @@ int main(int argc, char *argv[])
 	if(rc == 0){
 		//parse input
 		fgets(input, 512, stdin);
-	//	input[strlen(input) - 1] = '\0';	
+		//remove newline
+		char *newline = strchr(input, '\n');
+		if(newline != NULL){
+			*newline = '\0'; //overwrite newline
+		}
 
-		int cch = strlen(input);
-		printf("str len= %d\n", cch);
-		printf("last char %c\n", input[cch-1]);
-		printf("entered if");
-		input[cch-1] = '\0';
+		//printf("input: %s\n", input);
 		
-		
-		printf("input: %s", input);
-		printf("strcmp %d", strcmp(input, exit));
-		if(strcmp(input, exit) == 0){
+		printf("strcmp %d", strcmp(input, "exit"));
+		if(strcmp(input, "exit") == 0){
 			printf("entered exit check");
 //			exit(0);
 		}
