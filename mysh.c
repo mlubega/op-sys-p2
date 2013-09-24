@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
 		if(rc == 0){
 	
 		//child
-		char *argv[4];
+		char *argv[256]; //can have at most 512 bytes; 256 space-delimited char 
 	//	argv[0] = strdup("/bin/ls");
 	//	argv[1] = strdup("-l");
 	//	argv[2] = NULL;
