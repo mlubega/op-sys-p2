@@ -8,46 +8,64 @@
 int main(int argc, char *argv[])
 {
 	char input[512];
-	char exit[5] = "exit";
-	exit[5] = '\0';
+	char error_message[30] = "An error has occurred\n";
 
 	while(1){
-	
-	int rc = fork();
 	printf("mysh>");
-	if(rc == 0){
-		//parse input
+	
 		fgets(input, 512, stdin);
 		//remove newline
 		char *newline = strchr(input, '\n');
 		if(newline != NULL){
-			*newline = '\0'; //overwrite newline
+			*newline = '\0'; 
 		}
 
 		//printf("input: %s\n", input);
-		
-		printf("strcmp %d", strcmp(input, "exit"));
+
+		//BUILT-IN COMMANDS
 		if(strcmp(input, "exit") == 0){
-			printf("entered exit check");
-//			exit(0);
+			exit(0);
 		}
+		if(strcmp(input, "pwd") == 0){
+
+		}
+		if(strcmp(input, "cd") == 0){
+
+		}
+
+
+		//BASIC SHELL COMMANDS
+		int rc = fork();
+		if(rc == 0){
+	
 		//child
 		char *argv[4];
-		argv[0] = strdup("/bin/ls");
-		argv[1] = strdup("-l");
-		argv[2] = NULL;
+	//	argv[0] = strdup("/bin/ls");
+	//	argv[1] = strdup("-l");
+	//	argv[2] = NULL;
 
+		//working on parsing input:
+		int inputCount = 1;
+		char* token;
+		token = strtok(input, " ");
+		argv[0] = token;
+		while(token != NULL){
+			token = strtok(NULL, " ");
+			argv[inputCount] = token;
+			inputCount++;
+		}
+		argv[inputCount] = NULL;
 		execvp(argv[0], argv);
-		printf("exec failed");
+		write(STDERR_FILENO, error_message, strlen(error_message));
 
-	}
-	else if(rc > 0){
-		//parent
-		(void) wait(NULL);
-	}
-	else{
-		printf("error in calling fork()\n");
-	}
+		}
+		else if(rc > 0){
+			//parent
+			(void) wait(NULL);
+		}
+		else{
+			printf("error in calling fork()\n");
+		}
 	}
 	return 0;
 
