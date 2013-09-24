@@ -25,13 +25,27 @@ int main(int argc, char *argv[])
 		//BUILT-IN COMMANDS
 		if(strcmp(input, "exit") == 0){
 			exit(0);
+			//goes to error  message
 		}
 		if(strcmp(input, "pwd") == 0){
+		  char str[512];
+		  getcwd(str, 512);
+		  write(STDOUT_FILENO, str, strlen(str));
+		}
+		if(strcmp(input, "wait") == 0){
+
 
 		}
 		if(strcmp(input, "cd") == 0){
-
+		  char *homename;
+		  homename = getenv("HOME");
+		  write(STDOUT_FILENO, homename, strlen(homename));
+		  // prints (/u/m/a/maimunaAn error has occurred)
 		}
+
+		//Question:  will below this need to be in a if/elseif/else to prevent
+		//from printing the error message when all we have done is 
+		// process a built-in command?
 
 
 		//BASIC SHELL COMMANDS
